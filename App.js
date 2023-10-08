@@ -1,27 +1,71 @@
-import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import CadastroScreen from './src/components/cadastro/CadastroSreen';
-// import { SafeAreaViewBase } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import CadastroScreen from './src/components/cadastro/CadastroParticipantes';
 import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import ListLeilao from './src/components/leilao/ListLeilao';
 import CadastroLeilao from './src/components/leilao/CadastroLeilao';
 import Details from './src/components/leilao/Details';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Icon } from 'react-native-elements';
+import ListLance from './src/components/lance/ListLance';
+const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
-const Stack = createNativeStackNavigator();
+
+const Participantes = () => {
+  return (
+        <Stack.Navigator>
+          <Stack.Screen name="Cadastro" component={CadastroScreen}/>
+        </Stack.Navigator>
+  );
+}
+const Leiloes = () => {
+  return (
+        <Stack.Navigator>
+          <Stack.Screen name='Todos' component={ListLeilao}/>
+          <Stack.Screen name='Cadastro Leilao' component={CadastroLeilao}/>
+          <Stack.Screen name='Detalhes' component={Details}/>
+        </Stack.Navigator>
+  );
+}
+const Lances = () => {
+  return (
+        <Stack.Navigator>
+          <Stack.Screen name='Lances' component={ListLance}/>
+        </Stack.Navigator>
+  )
+}
+
 export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Cadastro" component={CadastroScreen}/>
-          <Stack.Screen name="Leiloes" component={ListLeilao}/>
-          <Stack.Screen name='Cadastro Leilao' component={CadastroLeilao}/>
-          <Stack.Screen name='Detalhes' component={Details}/>
-          <Stack.Screen name='Lances' component={ListLeilao}/>
-        </Stack.Navigator>
-        {/* <CadastroScreen></CadastroScreen> */}
+        <Tab.Navigator >
+          <Tab.Screen 
+            name="Participantes" 
+            component={Participantes} 
+            options={{tabBarIcon:
+
+           () => <Icon name='user' type='feather' />
+          }}
+          />
+          <Tab.Screen 
+            name="Leilão" 
+            component={Leiloes} 
+            options={{tabBarIcon:
+
+              () => <Icon name='list' type='feather' />
+             }}
+          />
+          <Tab.Screen 
+            name='Lance'
+            component={Lances}
+            options={{tabBarIcon:
+
+              () => <Icon name='money' />
+             }}
+          />
+        </Tab.Navigator>
       </NavigationContainer>
     </SafeAreaView>
 

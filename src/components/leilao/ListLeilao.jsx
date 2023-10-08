@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, FlatList, StyleSheet, Button } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 export default function ListLeilao() {
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     },
     botaoFlutuante: {
         position: 'absolute',
-        bottom: 0,
+        bottom: 10,
         alignSelf: 'center',
         backgroundColor: 'blue',
         borderRadius: 50,
@@ -101,7 +101,8 @@ const styles = StyleSheet.create({
         width: 70,
         height: 50,
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        borderRadius: "10"
     }
 });
 

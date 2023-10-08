@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Switch, Button, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const CadastroLeilao = () => {
+export default function CadastroLeilao() {
     const [nome, setNome] = useState('');
     const [valorMinimo, setValorMinimo] = useState('');
     const [leilaoAberto, setLeilaoAberto] = useState(false);
@@ -28,7 +28,7 @@ const CadastroLeilao = () => {
                 console.log(JSON.stringify(responseData));
             })
 
-        navigation.navigate('Leiloes');
+        navigation.navigate('Todos');
 
     };
 
@@ -80,4 +80,3 @@ const styles = StyleSheet.create({
     },
 });
 
-export default CadastroLeilao;

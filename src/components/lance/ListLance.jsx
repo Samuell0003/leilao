@@ -1,31 +1,23 @@
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
 export default function ListLance() {
     const [data, setData] = useState([]);
     const navigation = useNavigation();
-
-
-    const cadastro = () => {
-        navigation.navigate('Cadastro Leilao');
-    }
 
     useEffect(() => {
         fetch("https://leilao-rest-api.herokuapp.com/lance/")
             .then((resp) => resp.json())
             .then((json) => setData(json))
-            .catch((error) => console.error(error))
+            .catch((error) => console.log(error))
         // .finally(() => setLoading(false));
     });
     const ItemLista = ({ item }) => (
-        <TouchableOpacity onPress={() => navigation.navigate('Detalhes', item)}>
-            <View style={styles.itemContainer} >
-                <View>
-                    <Text style={styles.itemNome}>{item.nome}</Text>
-                    <Text style={styles.itemValorMinimo}>Valor Mínimo: R$ {item.valorMinimo}</Text>
-                </View>
-                <TouchableOpacity onPress={() => excluirItem(item.id)} style={styles.excluir}>
-                    <Text style={{ fontWeight: 'bold' }}>Excluir</Text>
-                </TouchableOpacity>
-            </View>
-        </TouchableOpacity>
+        <View style={styles.itemContainer} >
+            <Text style={styles.itemNome}>Nome: <Text style={{fontWeight:"normal"}}>{item.arrematante.nome}</Text></Text>
+            <Text styl={styles.itemValorMinimo}>Valor: R$ {item.valor}</Text>
+        </View>
     );
     return (
         <View style={{ height: '100%' }}>
@@ -34,11 +26,6 @@ export default function ListLance() {
                 renderItem={({ item }) => <ItemLista item={item} />}
                 keyExtractor={(item) => item.id.toString()}
             />
-            {/* <TouchableOpacity title="Cadastrar leilao" style={{position: 'absolute', bottom: 0,}} onPress={cadastro} > */}
-            <TouchableOpacity onPress={cadastro} style={styles.botaoFlutuante}>
-                <Text style={styles.textoBotao}>Cadastrar leilao</Text>
-            </TouchableOpacity>
-
         </View>
     );
 };
@@ -52,34 +39,11 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         flex: 1,
         flexDirection: "row",
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        alignItems: "center"
     },
     itemNome: {
         fontSize: 18,
         fontWeight: 'bold',
-    },
-    itemValorMinimo: {
-        marginTop: 8,
-        fontSize: 16,
-    },
-    botaoFlutuante: {
-        position: 'absolute',
-        bottom: 10,
-        alignSelf: 'center',
-        backgroundColor: 'blue',
-        borderRadius: 50,
-        paddingVertical: 12,
-        paddingHorizontal: 24,
-    },
-    textoBotao: {
-        color: 'white',
-        fontWeight: 'bold',
-    },
-    excluir: {
-        backgroundColor: "red",
-        width: 70,
-        height: 50,
-        justifyContent: "center",
-        alignItems: "center"
     }
 });
